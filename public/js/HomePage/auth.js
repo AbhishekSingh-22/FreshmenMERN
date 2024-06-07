@@ -1,5 +1,5 @@
     function Logout(){
-        fetch("https://freshmenmern-auth-testing.onrender.com/auth/logout", {
+        fetch("http://localhost:3500/auth/logout", {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json' // Indicates the request body format
@@ -26,15 +26,15 @@
 
 // Adding Auth Buttons 
 function addAuthBtns(){
-fetch("https://freshmenmern-auth-testing.onrender.com/auth/isAuthenticated")
+fetch("http://localhost:3500/auth/isAuthenticated")
 .then(res => res.json())
 .then(data => {
+    let authBtnsResponsive = document.querySelector("#authBtnsResponsive")
     let authBtns = document.querySelector("#authBtns")
     let signUp = document.querySelector("#SignUpBtn")
     let signIn = document.querySelector("#SignInBtn")
     html =``;
     if (data.isAuthenticated){
-        // alert(`Welcome ${data.user.username}`);
     html = `<a onClick = "Logout()"><button type="button">Sign out</button></a>`
     } else {
     html = `<button type="button" onclick="openForm()">Sign in</button>`
@@ -66,7 +66,7 @@ fetch("https://freshmenmern-auth-testing.onrender.com/auth/isAuthenticated")
     };
     
     
-        fetch("https://freshmenmern-auth-testing.onrender.com/auth/login", options)
+        fetch("http://localhost:3500/auth/login", options)
             .then(response => {
                 if(response.status === 400) {
                     alert("Please provide both email and password")
@@ -127,7 +127,7 @@ fetch("https://freshmenmern-auth-testing.onrender.com/auth/isAuthenticated")
     };
     
     
-        fetch("https://freshmenmern-auth-testing.onrender.com/register", options)
+        fetch("http://localhost:3500/register", options)
             .then(response => {
                 if (!response.ok) {
                     throw new Error('Network response was not ok ' + response.statusText);
@@ -142,10 +142,11 @@ fetch("https://freshmenmern-auth-testing.onrender.com/auth/isAuthenticated")
                 email.value = "";
                 password.value = "";
                 username.value = "";
+                confirmPassword.value = "";
 
                 alert(`${data.message}`);
 
-                if (data) addAuthBtns();
+                addAuthBtns();
                 } else{
                     alert(`${data.message}`);
                 }
@@ -158,6 +159,7 @@ fetch("https://freshmenmern-auth-testing.onrender.com/auth/isAuthenticated")
           })
   
           authBtns.innerHTML = html;
+          authBtnsResponsive.innerHTML = html;
         })
 .catch((error)=> console.log(error))
 }

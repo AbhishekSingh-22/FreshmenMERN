@@ -72,7 +72,9 @@
             <li><a><button type="button" onclick="window.location.href='https://forms.gle/3cviRX58Do1SdWb49';">Submit
                   Review</button></a>
             </li>
-            <li><button type="button" onclick="openForm()">login/signUp</button></li>
+            <li id="authBtnsResponsive">
+              <!-- added by backend -->
+            </li>
           </ul>
         </nav>
       </nav>
@@ -89,10 +91,10 @@
         <button id="login" class="" onclick="login()">login</button>
         <button id="signup" class="active" onclick="signup()">signup</button>
       </div>
-      <form id="signUpForm">
+      <form>
         <div class="popup-contents">
           <div class="signup ">
-            <form action="" method="post">
+            <form id="signUpForm">
             <div class="sub-grp ">
               <img src="./images/email.png" alt="email">
               <input type="email" name="email" id="email1" placeholder="Email" required>
@@ -234,7 +236,7 @@
   <footer class="footer ">
     <div class="footer-left">
       <div id="footerImage">
-        <img src="./images/Logofortitle.png" class="logoforfoot" height="80" width="80">
+        <img src="./images/Logopng.png" class="logoforfoot" height="80" width="80">
       </div>
       <div class="footer-text">Get the immersive and smooth experience<br> through starting off your engineering
         career<br> with the

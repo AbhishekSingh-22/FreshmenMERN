@@ -146,8 +146,8 @@ label {
   left: 25%;
   position: fixed;
   margin: auto;
-  width: 50vw;
-  height: 50vh;
+  width: 50%;
+  height: 50%;
   background-color: rgb(241, 241, 241);
   border: 16px solid rgb(241, 241, 241);
   border-radius: 12px;
@@ -264,18 +264,21 @@ label {
 }
 /* ---Find out button-- */
 .search-bar #submit {
-  height: 50px;
-  padding: 2px 16px;
-  background-color: #f0ff00;
-  border: none;
-  border-radius: 6px;
-  color: #5400ff;
-  font-size: 16px;
   cursor: pointer;
+  font-family: "Nunito Sans", sans-serif;
+  border: none;
+  background: yellow;
+  padding: 12px 30px;
+  color: #5400ff;
+  font-weight: bold;
+  font-size: 15px;
+  transition: 0.2s;
+  border-radius: 10px;
 }
 .search-bar #submit:hover {
+  color: #f0ff00;
   background-color: #5400ff;
-  color: white;
+  border: 2px solid #f0ff00;  
 }.search-bar {
     justify-content: center;
 }

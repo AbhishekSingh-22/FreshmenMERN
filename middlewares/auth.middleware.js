@@ -6,15 +6,14 @@ const verifyJWT = async(req, res, next) =>{
         const token = req.cookies?.accessToken || req.header("Authorization")?.replace("Bearer ", "")
     
         if (!token){
-            // req.user = {};
-            return res.status(401).json({"message":"Unauthorized request"});
+            throw "Unauthorized access"
         }
             
         const decodedToken = jwt.verify(token, process.env.ACCESS_TOKEN_SECRET)
     
         const user = await User.findOne({_id: decodedToken?._id}).select("-password -refreshToken");
     
-        if (!user) return res.status(401).json({"message":"Invalid Access Token 1"})
+        if (!user) throw "Invalid Access Token"
         
         req.user = user;
     
@@ -26,5 +25,36 @@ const verifyJWT = async(req, res, next) =>{
     }
 }
 
+async function isAuthenticated(req, res, next) {
+    try {
+      await verifyJWT(req, res, () => { // Pass an empty callback for verification only
+        req.isAuthenticated = true;
+        next();
+      });
+    } catch (error) {
+        try {
+          fetch('http://localhost:3500/auth/refresh-token', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json' // Optional, but recommended
+            }
+          })
+          .then(response => {
+            // Handle the response
+            req.isAuthenticated = true;
+            next();
+          })
+          .catch(error => {
+            // Handle errors
+            req.isAuthenticated = false;
+            next();
+          });
+        } catch (error) {
+          req.isAuthenticated = false;
+          next();
+        }
+    }
+  }
 
-module.exports = {verifyJWT};
+
+module.exports = {verifyJWT, isAuthenticated};

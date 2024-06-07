@@ -104,3 +104,73 @@ function filterFunction() {
 
 document.getElementById("searchInput").addEventListener("input", filterFunction);
 
+
+
+// adding Auth btns
+fetch("http://localhost:3500/auth/isAuthenticated")
+.then(res => res.json())
+.then(data => {
+    let authBtns = document.querySelector("#authBtns")
+    html =``;
+    if (data.isAuthenticated){
+    html = `<a onClick = Logout()><button type="button">Logout</button></a>`
+    } else {
+    html = `<a onClick = Login()><button type="button">Login</button></a>`
+    }
+
+    authBtns.innerHTML = html;
+
+}).catch((error)=> console.log(error))
+
+
+const url = 'http://localhost:3500/auth/login';
+
+// Data to be sent in the request
+const data1 = {
+    email: 'email@gmail.com',
+    password: 'anything'
+};
+
+// Options for the fetch request
+const options = {
+    method: 'POST',
+    headers: {
+        'Content-Type': 'application/json' // Indicates the request body format
+    },
+    body: JSON.stringify(data1) // Converts the JavaScript object into a JSON string
+};
+
+function Login(){
+// Sending the POST request
+fetch(url, options)
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Network response was not ok ' + response.statusText);
+        }
+        return response.json(); // Parses the response body as JSON
+    })
+    .then(data => {
+        console.log('Success:', data); // Handle the JSON response data
+    })
+    .catch(error => {
+        console.error('Error:', error); // Handle any errors
+    });
+
+  }
+
+function Logout(){
+    fetch("http://localhost:3500/auth/logout", options)
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Network response was not ok ' + response.statusText);
+        }
+        return response.json(); // Parses the response body as JSON
+    })
+    .then(data => {
+        console.log('Success:', data); // Handle the JSON response data
+    })
+    .catch(error => {
+        console.error('Error:', error); // Handle any errors
+    });
+
+  }

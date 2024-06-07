@@ -6,16 +6,6 @@ require('dotenv').config()
 
 const bcrypt = require('bcrypt')
 
-async function isAuthenticated(req, res, next) {
-    try {
-      await verifyJWT(req, res, () => { // Pass an empty callback for verification only
-        return true; // User is authenticated if middleware doesn't throw
-      });
-    } catch (error) {
-      return false; // User is not authenticated if an error occurs
-    }
-  }
-
 const handleLogin = async (req, res) => {
     const {email, password} = req.body
 
@@ -82,20 +72,20 @@ const refreshAccessToken = async (req, res)=>{
     // then generate new access token and save in cookie
 
     const incomingRefreshToken = req.cookies?.refreshToken || req.body?.refershToken;
-    if (!incomingRefreshToken) return res.status(401).json({"message":"Unauthorized access!"})
+    if (!incomingRefreshToken) throw "Unauthorized Access"
 
     const decodedToken = await jwt.verify(
         incomingRefreshToken,
         process.env.REFRESH_TOKEN_SECRET
     );
 
-    if(!decodedToken) return res.status(401).json({"message": "Invalid Token"});
+    if(!decodedToken) throw "Invalid Token"
 
     const user = await User.findOne({_id: decodedToken._id}).select("-password")
 
-    if (!user) return res.status(401).json({"message": "Invalid Token"});
+    if (!user) throw "Invalid Token"
 
-    if(incomingRefreshToken !== user.refreshToken) return res.status(401).json({"message": "Refresh token is expired or invalid"});
+    if(incomingRefreshToken !== user.refreshToken) throw "Refresh Token is expired or invalid"
 
     let accessToken = user.generateAccessToken();
     let refreshToken = user.generateRefreshToken();
@@ -114,5 +104,6 @@ const refreshAccessToken = async (req, res)=>{
     .cookie("refreshToken", refreshToken, options)
     .json({"message":"Access token and Refresh Token Got Refreshed successfully!"})
 }
+
 
 module.exports = {handleLogin, handleLogout, refreshAccessToken}

@@ -13,6 +13,11 @@ router.route('/logout')
 router.route('/refresh-token')
     .post(authController.refreshAccessToken)
 
+router.route('/isAuthenticated')
+    .get(authMiddleware.isAuthenticated, (req, res)=>{
+        return res.status(200).json({"isAuthenticated": req.isAuthenticated});
+})
+
 
 
 module.exports = router

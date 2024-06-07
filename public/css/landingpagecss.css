@@ -144,7 +144,7 @@ label {
 .popup{
   top: 25%;
   left: 25%;
-  position: absolute;
+  position: fixed;
   margin: auto;
   width: 50vw;
   height: 50vh;
@@ -154,6 +154,7 @@ label {
   display: grid;
   grid-template-columns: 2fr 9fr 1fr;
   gap: 1.5rem;
+
 }
 
 .popup .close{

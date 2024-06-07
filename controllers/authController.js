@@ -38,7 +38,9 @@ const handleLogin = async (req, res) => {
     .status(200)
     .cookie("accessToken",accessToken, options)
     .cookie("refreshToken", refreshToken, options)
-    .json({"message":"User Logged In!"})
+    .json({"message":"User Logged In!",
+        "user":loggedInUser
+    })
 }
 
 
@@ -58,7 +60,7 @@ const handleLogout = async (req, res) =>{
         httpOnly: true,
         secure: true
     }
-    return res
+   return res
     .status(200)
     .clearCookie("accessToken", options)
     .clearCookie("refreshToken", options)

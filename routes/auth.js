@@ -15,7 +15,7 @@ router.route('/refresh-token')
 
 router.route('/isAuthenticated')
     .get(authMiddleware.isAuthenticated, (req, res)=>{
-        return res.status(200).json({"isAuthenticated": req.isAuthenticated});
+        return res.status(200).json({"isAuthenticated": req.isAuthenticated, "user": req.user});
 })
 
 

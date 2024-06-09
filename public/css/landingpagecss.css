@@ -146,8 +146,8 @@ label {
   left: 25%;
   position: fixed;
   margin: auto;
-  width: 50%;
-  height: 50%;
+  width: 50vw;
+  height: 50vh;
   background-color: rgb(241, 241, 241);
   border: 16px solid rgb(241, 241, 241);
   border-radius: 12px;

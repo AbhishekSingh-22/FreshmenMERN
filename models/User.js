@@ -19,12 +19,15 @@ const UserSchema = new Schema({
     password: {
       type: String,
       required: true,
+      trim: true
     },
     first_name: {
       type: String,
+      trim: true
     },
     last_name: {
       type: String,
+      trim: true
     },
     refreshToken: {
         type: String,

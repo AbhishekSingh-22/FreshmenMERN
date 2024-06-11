@@ -1,7 +1,7 @@
 // get all professor in DB and show it as options on the index.html file
 
 async function getProfData(){
-    const res = await fetch("https://freshmenmern.onrender.com/professor");
+    const res = await fetch("https://freshmenmern-auth-testing.onrender.com/professor");
     const data = await res.json();
     
     let profData = data;
@@ -23,7 +23,7 @@ getProfData();
 // fill the Review area on selection of a prof
 
 document.getElementById("submit").addEventListener('click', async function () {
-    const res = await fetch("https://freshmenmern.onrender.com/professor");
+    const res = await fetch("https://freshmenmern-auth-testing.onrender.com/professor");
     const data = await res.json();
     let dropdown = document.getElementById("dropdown");
     let selectedProf = dropdown.value;

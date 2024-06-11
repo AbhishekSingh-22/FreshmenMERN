@@ -1,5 +1,5 @@
     function Logout(){
-        fetch("http://localhost:3500/auth/logout", {
+        fetch("https://freshmenmern-auth-testing.onrender.com/auth/logout", {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json' // Indicates the request body format
@@ -182,7 +182,7 @@
 
 async function addAuthBtns() {
     try {
-      const response = await fetch("http://localhost:3500/auth/isAuthenticated");
+      const response = await fetch("https://freshmenmern-auth-testing.onrender.com/auth/isAuthenticated");
       const data = await response.json();
   
       let authBtnsResponsive = document.querySelector("#authBtnsResponsive");
@@ -238,7 +238,7 @@ signIn.addEventListener("click", function (e){
                 };
                 
                 
-                    fetch("http://localhost:3500/auth/login", options)
+                    fetch("https://freshmenmern-auth-testing.onrender.com/auth/login", options)
                         .then(response => {
                             if(response.status === 400) {
                                 alert("Please provide both email and password")
@@ -308,7 +308,7 @@ signUp.addEventListener("click", function (e){
                             };
                             
                             
-                                fetch("http://localhost:3500/register", options)
+                                fetch("https://freshmenmern-auth-testing.onrender.com/register", options)
                                     .then(response => {
                                         if (!response.ok) {
                                             throw new Error('Network response was not ok ' + response.statusText);

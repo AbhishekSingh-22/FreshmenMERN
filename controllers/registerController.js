@@ -1,5 +1,6 @@
-const path = require('path')
 const User = require('../models/User.js')
+const Otp = require("../models/Otp.js")
+const sendEmail = require("../email/emailFunctionality.js")
 
 const bcrypt = require('bcrypt')
 
@@ -13,9 +14,20 @@ const handleNewUser = async (req,res) =>{
     
         if (password !== confirmPassword) return res.json({"status":200, "message":"Confirm password is incorrect!"})
     
-            //check for duplicate username
-        let duplicateUser = await User.findOne({ email: email }).exec();
+        // Check for duplicate username
+        let duplicateUser = await User.findOne({ email: email}).exec();
         if (duplicateUser) return res.json({"status":200, 'message': `User with email: ${email} already exists!`})
+
+        // ********************** Email verification via OTP **********************
+        // find dupliacate otp for the user with username
+        // delete that otp and create new one
+        // save into model
+        // send otp via mail
+        // post it in otp verification api
+        // if correct otp then proceed
+        // otherwise keep continuing(looping)
+
+        // *************** to be continued **************** 
     
         try{
             // hashing the pwd
@@ -41,6 +53,49 @@ const handleNewUser = async (req,res) =>{
     }
     
 }
+
+// const sendOtp = async (req,res, username, email) => {
+//     try {
+//         const otp = Otp.generateOTP();
+    
+//         const expiryTime = new Date();
+//         expiryTime.setMinutes(expiryTime.getMinutes() + 10); 
+    
+//         const newOtp = new Otp({
+//             otp: otp,
+//             username: username,
+//             expiryTime: expiryTime
+    
+//         })
+        
+//         const savedOtp = await newOtp.save({validateBeforeSave: false});
+
+//         const sentemail = await sendEmail("discoverfreshmen@gmail.com", email, "OTP Verification", `Here is the otp for the email verifcation ${otp}. It will be valid for 10 minutes.`)
+//         return sentemail
+
+//     } catch (error) {
+//         console.log(error)
+//         console.log("Something went wrong while sendingOtp");
+//     }
+// }
+
+// const validateOtp = async (req, res, username) =>{
+//     const otp = await Otp.findOne({username: username});
+//     const currentTime = new Date();
+
+//     if (currentTime > otp.expiryTime){
+//         return false
+//     } 
+    
+//     const {OTP} = req.body;
+
+//     if (OTP === otp.otp){
+//         return true;
+//     }
+
+//     return false
+// }
+
 
 
 module.exports = {handleNewUser}

@@ -1,27 +1,29 @@
 const nodemailer = require("nodemailer");
 
-function sendEmail(from, to, subject, text){
-    const auth = nodemailer.createTransport({
-        service : "gmail",
-        secure : true,
-        port : 465,
-        auth : {
-            user: "discoverfreshmen@gmail.com",
-            pass: "less secure password her"
+async function sendEmail(to, subject, text){
+        const auth = nodemailer.createTransport({
+            host: "smtp.gmail.com",
+            port: 465,
+            secure: true,
+            auth : {
+                user: "discoverfreshmen@gmail.com",
+                pass: process.env.APP_PASSWORD
+            }
+        });
+    
+        const receiver = {
+            from : "discoverfreshmen@gmail.com",
+            to : to,
+            subject: subject,
+            text: text
         }
-    });
-
-    const receiver = {
-        from : from,
-        to : to,
-        subject: subject,
-        text: text
-    }
-
-    auth.sendMail(receiver, (error, emailResponse)=>{
-        if (error) throw error;
-        console.log(`Success! ${emailResponse}`);
-    })
+    
+        try {
+            const response = await auth.sendMail(receiver);
+            console.log("email sent successfully")
+        } catch (error) {
+            console.log(error)
+        }
 }
 
 module.exports = sendEmail;
